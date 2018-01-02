@@ -1,0 +1,38 @@
+os: 
+  - Visual Studio 2017
+  
+branches:
+  only:
+  - master
+
+platform:
+  - x86
+
+configuration:
+  - Release
+  #- Debug
+
+environment:
+  MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
+  matrix:
+    - generator: "Visual Studio 15"
+
+matrix:
+  fast_finish: true
+
+before_build:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - mkdir build
+  - cd build
+  - >
+    cmake ..
+    -G "%generator%" 
+    -DBUILD_TESTS=ON
+  - cmake --build . --target ALL_BUILD --config %configuration% 
+
+test_script:
+  - cd %APPVEYOR_BUILD_FOLDER%/build
+  - ctest -C %configuration% --output-on-failure .
