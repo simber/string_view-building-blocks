@@ -11,7 +11,6 @@ set(INCLUDE_FILES
 )
 set(TEST_FILES
 	"${TEST_DIR}/svbb.t.cpp"
-    "${TEST_DIR}/config.hpp"
 )
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -23,7 +22,7 @@ target_include_directories(${PROJECT_NAME}
 )
 if(BUILD_TESTS)
 	enable_testing()
-    add_executable("${PROJECT_NAME}_test" ${INCLUDE_FILES} ${TEST_FILES} "${TEST_DIR}/svbb_test_config.hpp")
+    add_executable("${PROJECT_NAME}_test" ${INCLUDE_FILES} ${TEST_FILES} "${TEST_DIR}/config.hpp")
 	target_link_libraries("${PROJECT_NAME}_test" PRIVATE svbb::svbb)
 
     if(SVBB_USE_BOOST_SPIRIT_CONVERSIONS)
