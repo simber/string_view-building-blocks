@@ -1,6 +1,6 @@
 os: 
   - Visual Studio 2017
-  - Visual Studio 2013
+  - Visual Studio 2015
   
 branches:
   only:
@@ -8,6 +8,7 @@ branches:
 
 platform:
   - x86
+  - x64
 
 configuration:
   - Release
@@ -17,7 +18,7 @@ environment:
   MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
   matrix:
     - generator: "Visual Studio 15"
-    - generator: "Visual Studio 12"
+    - generator: "Visual Studio 14"
 
 matrix:
   fast_finish: true
