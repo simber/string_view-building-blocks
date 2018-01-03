@@ -1,5 +1,6 @@
 os: 
   - Visual Studio 2017
+  - Visual Studio 2013
   
 branches:
   only:
@@ -16,6 +17,7 @@ environment:
   MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
   matrix:
     - generator: "Visual Studio 15"
+    - generator: "Visual Studio 12"
 
 matrix:
   fast_finish: true
