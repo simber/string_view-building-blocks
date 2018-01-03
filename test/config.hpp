@@ -1,6 +1,5 @@
 #pragma once
 
-#include "catch.hpp"
 #ifdef SVBB_USE_STX_STRING_VIEW
 #include "stx/string_view.hpp"
 #include "stx/optional.hpp"

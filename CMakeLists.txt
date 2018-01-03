@@ -8,9 +8,23 @@ set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}")
 set(TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 set(INCLUDE_FILES 
     "${INCLUDE_DIR}/svbb.hpp"
+    "${INCLUDE_DIR}/tokenize.hpp"
+    "${INCLUDE_DIR}/config.hpp"
+    "${INCLUDE_DIR}/trim.hpp"
+    "${INCLUDE_DIR}/split.hpp"
+    "${INCLUDE_DIR}/util.hpp"
+    "${INCLUDE_DIR}/char_traits.hpp"
+    #"${INCLUDE_DIR}/csv.hpp"
+	#"${INCLUDE_DIR}/string_view_conversion.hpp"
 )
-set(TEST_FILES
-	"${TEST_DIR}/svbb.t.cpp"
+set(TEST_FILES 
+    "${TEST_DIR}/svbb.t.cpp"
+    "${TEST_DIR}/tokenize.t.cpp"
+    "${TEST_DIR}/trim.t.cpp"
+    "${TEST_DIR}/split.t.cpp"
+    "${TEST_DIR}/util.t.cpp"
+    #"${TEST_DIR}/csv.t.cpp"
+	#"${TEST_DIR}/string_view_conversion.t.cpp"
 )
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -38,7 +52,7 @@ if(BUILD_TESTS)
         if(MSVC_VERSION GREATER_EQUAL 1910)
             target_compile_features("${PROJECT_NAME}_test" PRIVATE cxx_std_17)
             target_compile_options("${PROJECT_NAME}_test" PRIVATE "/permissive-" "/std:c++17")
-            target_compile_definitions("${PROJECT_NAME}_test" PRIVATE _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
+            target_compile_definitions("${PROJECT_NAME}_test" PRIVATE _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS BOOST_ALL_NO_LIB)
             set(SVBB_NO_CXX14_CONSTEXPR OFF)
         elseif(MSVC_VERSION GREATER_EQUAL 1700)
             target_compile_features("${PROJECT_NAME}_test" PRIVATE cxx_std_11)
