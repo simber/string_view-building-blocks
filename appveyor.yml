@@ -33,6 +33,7 @@ build_script:
     cmake ..
     -G "%generator%" 
     -DBUILD_TESTS=ON
+    -DSVBB_BUILD_EXAMPLES=ON
   - cmake --build . --target ALL_BUILD --config %configuration% 
 
 test_script:

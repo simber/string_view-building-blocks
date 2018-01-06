@@ -5,14 +5,14 @@
 namespace SVBB_NAMESPACE {
 
 template<typename CharT, typename Traits, typename Allocator>
-auto make_string_view(const std::basic_string<CharT, Traits, Allocator>& str)
+auto make_view(const std::basic_string<CharT, Traits, Allocator>& str)
     -> basic_string_view<CharT, Traits>
 {
     return basic_string_view<CharT, Traits>{str};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
-auto make_string_view(std::basic_string<CharT, Traits, Allocator>&& str)
+auto make_view(std::basic_string<CharT, Traits, Allocator>&& str)
     -> basic_string_view<CharT, Traits>
 {
     static_assert(sizeof(CharT) != sizeof(CharT),
@@ -20,13 +20,13 @@ auto make_string_view(std::basic_string<CharT, Traits, Allocator>&& str)
 }
 
 template<typename CharT, typename Traits = std::char_traits<CharT>>
-constexpr auto make_string_view(const CharT* str) -> basic_string_view<CharT, Traits>
+constexpr auto make_view(const CharT* str) -> basic_string_view<CharT, Traits>
 {
     return basic_string_view<CharT, Traits>{str};
 }
 
 template<typename CharT, typename Traits = std::char_traits<CharT>>
-constexpr auto make_string_view(const CharT* str, size_t len) -> basic_string_view<CharT, Traits>
+constexpr auto make_view(const CharT* str, size_t len) -> basic_string_view<CharT, Traits>
 {
     return basic_string_view<CharT, Traits>{str, len};
 }
