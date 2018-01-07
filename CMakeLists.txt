@@ -84,7 +84,7 @@ if(SVBB_CONSTEXPR_ALL_THE_THINGS)
 endif()
 
 if(SVBB_USE_BOOST_STRING_VIEW)
-	find_package(Boost 1.58 REQUIRED QUIET)
+	find_package(Boost 1.61 REQUIRED QUIET)
 	target_link_libraries("${PROJECT_NAME}_config" INTERFACE Boost::boost)
 	target_compile_definitions("${PROJECT_NAME}_config" INTERFACE SVBB_USE_BOOST_STRING_VIEW BOOST_ALL_NO_LIB)
 elseif(SVBB_USE_STX_STRING_VIEW)
