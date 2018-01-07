@@ -20,20 +20,20 @@ auto make_view(std::basic_string<CharT, Traits, Allocator>&& str)
 }
 
 template<typename CharT, typename Traits = std::char_traits<CharT>>
-constexpr auto make_view(const CharT* str) -> basic_string_view<CharT, Traits>
+SVBB_CONSTEXPR auto make_view(const CharT* str) -> basic_string_view<CharT, Traits>
 {
     return basic_string_view<CharT, Traits>{str};
 }
 
 template<typename CharT, typename Traits = std::char_traits<CharT>>
-constexpr auto make_view(const CharT* str, size_t len) -> basic_string_view<CharT, Traits>
+SVBB_CONSTEXPR auto make_view(const CharT* str, size_t len) -> basic_string_view<CharT, Traits>
 {
     return basic_string_view<CharT, Traits>{str, len};
 }
 
 namespace literals {
 
-constexpr string_view operator""_sv(const char* str, std::size_t len) noexcept
+SVBB_CONSTEXPR string_view operator""_sv(const char* str, std::size_t len) noexcept
 {
     return string_view{str, len};
 }

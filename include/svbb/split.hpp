@@ -12,15 +12,16 @@ struct split_result
 };
 
 template<typename CharT, typename Traits>
-constexpr auto make_split(basic_string_view<CharT, Traits> left,
-                          basic_string_view<CharT, Traits> right) -> split_result<CharT, Traits>
+SVBB_CONSTEXPR auto make_split(basic_string_view<CharT, Traits> left,
+                               basic_string_view<CharT, Traits> right)
+    -> split_result<CharT, Traits>
 {
     return {left, right};
 }
 
 template<typename CharT, typename Traits>
-constexpr bool operator==(const split_result<CharT, Traits>& lhs,
-                          const split_result<CharT, Traits>& rhs)
+SVBB_CONSTEXPR bool operator==(const split_result<CharT, Traits>& lhs,
+                               const split_result<CharT, Traits>& rhs)
 {
     return lhs.left == rhs.left && lhs.right == rhs.right;
 }

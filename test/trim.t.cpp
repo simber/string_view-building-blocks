@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "config.hpp"
+#include "test_config.hpp"
 #include "svbb/trim.hpp"
 #include "svbb/util.hpp"
 

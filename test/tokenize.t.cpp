@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "config.hpp"
+#include "test_config.hpp"
 #include "svbb/tokenize.hpp"
 #include "svbb/util.hpp"
 #include <array>
@@ -30,7 +30,7 @@ SVBB_CXX14_CONSTEXPR bool rng_check(const TokenRng& rng,
 }
 
 template<typename... T>
-constexpr auto make_array(T&&... values)
+SVBB_CONSTEXPR auto make_array(T&&... values)
     -> std::array<typename std::decay<typename std::common_type<T...>::type>::type, sizeof...(T)>
 {
     return std::array<typename std::decay<typename std::common_type<T...>::type>::type,
@@ -48,8 +48,8 @@ TEST_CASE("tokenize")
 
 TEST_CASE("tokenize trimmed")
 {
-    static constexpr auto whitespace = " \t"_sv;
-    static constexpr char delimeter = ',';
+    const auto whitespace = " \t"_sv;
+    const char delimeter = ',';
     require_range_equal(tokenize(""_sv, delimeter, whitespace), {});
     require_range_equal(tokenize(" "_sv, delimeter, whitespace), {});
     require_range_equal(tokenize("abc"_sv, delimeter, whitespace), {"abc"});

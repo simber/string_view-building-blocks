@@ -2,10 +2,16 @@
 #include <cassert>
 #define SVBB_ASSERT(x) assert(x)
 
-#if __cpp_constexpr >= 201304
-#define SVBB_CXX14_CONSTEXPR constexpr
-#else
+#ifdef SVBB_NO_CONSTEXPR
 #define SVBB_CXX14_CONSTEXPR inline
+#define SVBB_CONSTEXPR inline
+#else
+#define SVBB_CONSTEXPR constexpr
+#ifdef SVBB_NO_CXX14_CONSTEXPR
+#define SVBB_CXX14_CONSTEXPR inline
+#else
+#define SVBB_CXX14_CONSTEXPR constexpr
+#endif
 #endif
 
 #ifndef SVBB_STRING_VIEW_IMPL
