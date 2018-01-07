@@ -13,14 +13,14 @@ class token_range_state
 public:
     using view_type = basic_string_view<CharT, Traits>;
 
-    constexpr token_range_state(view_type input, Splitter splitter)
+    SVBB_CONSTEXPR token_range_state(view_type input, Splitter splitter)
         : data_{view_type{}, input}, splitter_(splitter)
     {
     }
 
-    constexpr view_type token() const noexcept { return data_.left; }
-    constexpr view_type remainder() const noexcept { return data_.right; }
-    constexpr bool empty() const noexcept { return remainder().empty() && token().empty(); }
+    SVBB_CONSTEXPR view_type token() const noexcept { return data_.left; }
+    SVBB_CONSTEXPR view_type remainder() const noexcept { return data_.right; }
+    SVBB_CONSTEXPR bool empty() const noexcept { return remainder().empty() && token().empty(); }
     SVBB_CXX14_CONSTEXPR void split() { data_ = splitter_(remainder()); }
 
 private:
@@ -40,10 +40,10 @@ public:
     using reference = view_type;
     using iterator_category = std::input_iterator_tag;
 
-    constexpr token_iterator() noexcept : state_{nullptr} {};
+    SVBB_CONSTEXPR token_iterator() noexcept : state_{nullptr} {};
     SVBB_CXX14_CONSTEXPR token_iterator(state_type* data) : state_{data} { advance(); }
 
-    constexpr reference operator*() const noexcept { return state_->token(); }
+    SVBB_CONSTEXPR reference operator*() const noexcept { return state_->token(); }
     SVBB_CXX14_CONSTEXPR token_iterator& operator++()
     {
         advance();
@@ -57,11 +57,14 @@ public:
         return tmp;
     }
 
-    constexpr bool operator==(const token_iterator& rhs) const noexcept
+    SVBB_CONSTEXPR bool operator==(const token_iterator& rhs) const noexcept
     {
         return state_ == nullptr && rhs.state_ == nullptr;
     }
-    constexpr bool operator!=(const token_iterator& rhs) const noexcept { return !(*this == rhs); }
+    SVBB_CONSTEXPR bool operator!=(const token_iterator& rhs) const noexcept
+    {
+        return !(*this == rhs);
+    }
 
 private:
     SVBB_CXX14_CONSTEXPR void advance()
@@ -82,13 +85,13 @@ public:
     using state_type = typename iterator::state_type;
     using view_type = typename iterator::view_type;
 
-    constexpr token_range(view_type view, Splitter splitter)
+    SVBB_CONSTEXPR token_range(view_type view, Splitter splitter)
         : state_{view, splitter}, begin_{&state_}
     {
     }
 
-    constexpr auto begin() const noexcept -> iterator { return begin_; }
-    constexpr auto end() const noexcept -> iterator { return iterator{}; }
+    SVBB_CONSTEXPR auto begin() const noexcept -> iterator { return begin_; }
+    SVBB_CONSTEXPR auto end() const noexcept -> iterator { return iterator{}; }
 
 private:
     state_type state_;
@@ -96,9 +99,9 @@ private:
 };
 
 template<typename CharT>
-struct basic_splitter
+struct by_char
 {
-    constexpr explicit basic_splitter(CharT delimeter) : delimeter(delimeter) {}
+    SVBB_CONSTEXPR explicit by_char(CharT delimeter) : delimeter(delimeter) {}
 
     template<typename Traits>
     SVBB_CXX14_CONSTEXPR auto operator()(basic_string_view<CharT, Traits> input) const
@@ -110,10 +113,10 @@ struct basic_splitter
 };
 
 template<typename CharT, typename Traits>
-struct trim_splitter
+struct trimmed_by_char
 {
     using view_type = basic_string_view<CharT, Traits>;
-    constexpr trim_splitter(CharT delimeter, view_type whitespace)
+    SVBB_CONSTEXPR trimmed_by_char(CharT delimeter, view_type whitespace)
         : whitespace(whitespace), delimeter(delimeter)
     {
     }
@@ -138,16 +141,16 @@ SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, Splitt
 
 template<typename CharT, typename Traits>
 SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, CharT delimeter)
-    -> detail::token_range<CharT, Traits, detail::basic_splitter<CharT>>
+    -> detail::token_range<CharT, Traits, detail::by_char<CharT>>
 {
-    return tokenize(view, detail::basic_splitter<CharT>{delimeter});
+    return tokenize(view, detail::by_char<CharT>{delimeter});
 }
 
 template<typename CharT, typename Traits>
 SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, CharT delimeter,
                                    basic_string_view<CharT, Traits> whitespace)
-    -> detail::token_range<CharT, Traits, detail::trim_splitter<CharT, Traits>>
+    -> detail::token_range<CharT, Traits, detail::trimmed_by_char<CharT, Traits>>
 {
-    return tokenize(view, detail::trim_splitter<CharT, Traits>{delimeter, whitespace});
+    return tokenize(view, detail::trimmed_by_char<CharT, Traits>{delimeter, whitespace});
 }
 } // namespace SVBB_NAMESPACE

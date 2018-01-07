@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "config.hpp" // for setting up which string_view implementation is used
+#include "example_config.hpp" // for setting up which string_view implementation is used
 #include "svbb/tokenize.hpp"
 #include "svbb/util.hpp" // svbb::make_view
 
