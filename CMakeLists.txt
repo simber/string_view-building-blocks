@@ -15,6 +15,7 @@ set(INCLUDE_FILES
     "${INCLUDE_DIR}/trim.hpp"
     "${INCLUDE_DIR}/split.hpp"
     "${INCLUDE_DIR}/util.hpp"
+    "${INCLUDE_DIR}/literals.hpp"
     "${INCLUDE_DIR}/char_traits.hpp"
     #"${INCLUDE_DIR}/csv.hpp"
 	#"${INCLUDE_DIR}/string_view_conversion.hpp"

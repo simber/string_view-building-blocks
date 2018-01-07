@@ -18,9 +18,12 @@ public:
     {
     }
 
-    SVBB_CONSTEXPR view_type token() const noexcept { return data_.left; }
-    SVBB_CONSTEXPR view_type remainder() const noexcept { return data_.right; }
-    SVBB_CONSTEXPR bool empty() const noexcept { return remainder().empty() && token().empty(); }
+    SVBB_CONSTEXPR view_type token() const SVBB_NOEXCEPT { return data_.left; }
+    SVBB_CONSTEXPR view_type remainder() const SVBB_NOEXCEPT { return data_.right; }
+    SVBB_CONSTEXPR bool empty() const SVBB_NOEXCEPT
+    {
+        return remainder().empty() && token().empty();
+    }
     SVBB_CXX14_CONSTEXPR void split() { data_ = splitter_(remainder()); }
 
 private:
@@ -40,10 +43,10 @@ public:
     using reference = view_type;
     using iterator_category = std::input_iterator_tag;
 
-    SVBB_CONSTEXPR token_iterator() noexcept : state_{nullptr} {};
+    SVBB_CONSTEXPR token_iterator() SVBB_NOEXCEPT : state_{nullptr} {};
     SVBB_CXX14_CONSTEXPR token_iterator(state_type* data) : state_{data} { advance(); }
 
-    SVBB_CONSTEXPR reference operator*() const noexcept { return state_->token(); }
+    SVBB_CONSTEXPR reference operator*() const SVBB_NOEXCEPT { return state_->token(); }
     SVBB_CXX14_CONSTEXPR token_iterator& operator++()
     {
         advance();
@@ -57,11 +60,11 @@ public:
         return tmp;
     }
 
-    SVBB_CONSTEXPR bool operator==(const token_iterator& rhs) const noexcept
+    SVBB_CONSTEXPR bool operator==(const token_iterator& rhs) const SVBB_NOEXCEPT
     {
         return state_ == nullptr && rhs.state_ == nullptr;
     }
-    SVBB_CONSTEXPR bool operator!=(const token_iterator& rhs) const noexcept
+    SVBB_CONSTEXPR bool operator!=(const token_iterator& rhs) const SVBB_NOEXCEPT
     {
         return !(*this == rhs);
     }
@@ -90,8 +93,8 @@ public:
     {
     }
 
-    SVBB_CONSTEXPR auto begin() const noexcept -> iterator { return begin_; }
-    SVBB_CONSTEXPR auto end() const noexcept -> iterator { return iterator{}; }
+    SVBB_CONSTEXPR auto begin() const SVBB_NOEXCEPT -> iterator { return begin_; }
+    SVBB_CONSTEXPR auto end() const SVBB_NOEXCEPT -> iterator { return iterator{}; }
 
 private:
     state_type state_;
