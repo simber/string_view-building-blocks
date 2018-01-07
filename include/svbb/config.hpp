@@ -14,6 +14,12 @@
 #endif
 #endif
 
+#ifdef SVBB_NO_NOEXCEPT
+#define SVBB_NOEXCEPT
+#else
+#define SVBB_NOEXCEPT noexcept
+#endif
+
 #ifndef SVBB_STRING_VIEW_IMPL
 #include <string_view>
 #define SVBB_STRING_VIEW_IMPL std

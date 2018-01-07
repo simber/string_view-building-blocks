@@ -33,12 +33,12 @@ SVBB_CONSTEXPR auto make_view(const CharT* str, size_t len) -> basic_string_view
 
 namespace literals {
 
-SVBB_CONSTEXPR string_view operator""_sv(const char* str, std::size_t len) noexcept
+SVBB_CONSTEXPR string_view operator""_sv(const char* str, std::size_t len)SVBB_NOEXCEPT
 {
     return string_view{str, len};
 }
 
-constexpr auto operator""_svc(const char* str, std::size_t len) noexcept
+constexpr auto operator""_svc(const char* str, std::size_t len)SVBB_NOEXCEPT
     -> basic_string_view<char, constexpr_char_traits<char>>
 {
     return basic_string_view<char, constexpr_char_traits<char>>{str, len};
