@@ -14,7 +14,7 @@ public:
     using view_type = basic_string_view<CharT, Traits>;
 
     SVBB_CONSTEXPR token_range_state(view_type input, Splitter splitter)
-        : data_{view_type{}, input}, splitter_(splitter)
+        : data_(make_split(view_type(), input)), splitter_(splitter)
     {
     }
 
@@ -44,7 +44,7 @@ public:
     using iterator_category = std::input_iterator_tag;
 
     SVBB_CONSTEXPR token_iterator() SVBB_NOEXCEPT : state_{nullptr} {};
-    SVBB_CXX14_CONSTEXPR token_iterator(state_type* data) : state_{data} { advance(); }
+    SVBB_CXX14_CONSTEXPR token_iterator(state_type* data) : state_(data) { advance(); }
 
     SVBB_CONSTEXPR reference operator*() const SVBB_NOEXCEPT { return state_->token(); }
     SVBB_CXX14_CONSTEXPR token_iterator& operator++()
@@ -89,12 +89,12 @@ public:
     using view_type = typename iterator::view_type;
 
     SVBB_CONSTEXPR token_range(view_type view, Splitter splitter)
-        : state_{view, splitter}, begin_{&state_}
+        : state_(view, splitter), begin_(&state_)
     {
     }
 
     SVBB_CONSTEXPR auto begin() const SVBB_NOEXCEPT -> iterator { return begin_; }
-    SVBB_CONSTEXPR auto end() const SVBB_NOEXCEPT -> iterator { return iterator{}; }
+    SVBB_CONSTEXPR auto end() const SVBB_NOEXCEPT -> iterator { return iterator(); }
 
 private:
     state_type state_;
@@ -139,14 +139,14 @@ template<typename CharT, typename Traits, typename Splitter>
 SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, Splitter splitter)
     -> detail::token_range<CharT, Traits, Splitter>
 {
-    return detail::token_range<CharT, Traits, Splitter>{view, splitter};
+    return detail::token_range<CharT, Traits, Splitter>(view, splitter);
 }
 
 template<typename CharT, typename Traits>
 SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, CharT delimeter)
     -> detail::token_range<CharT, Traits, detail::by_char<CharT>>
 {
-    return tokenize(view, detail::by_char<CharT>{delimeter});
+    return tokenize(view, detail::by_char<CharT>(delimeter));
 }
 
 template<typename CharT, typename Traits>
@@ -154,6 +154,6 @@ SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, CharT 
                                    basic_string_view<CharT, Traits> whitespace)
     -> detail::token_range<CharT, Traits, detail::trimmed_by_char<CharT, Traits>>
 {
-    return tokenize(view, detail::trimmed_by_char<CharT, Traits>{delimeter, whitespace});
+    return tokenize(view, detail::trimmed_by_char<CharT, Traits>(delimeter, whitespace));
 }
 } // namespace SVBB_NAMESPACE
