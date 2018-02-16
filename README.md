@@ -11,59 +11,32 @@ This library provides basic functions for splitting and trimming a `std::string_
 
 #### How to split a `string_view` with svbb:
 ```c++
-#include <iostream>
-#include "svbb/tokenize.hpp"
-#include "svbb/util.hpp"
+using svbb::make_view;
+using svbb::string_view;
+using svbb::tokenize;
 
-int main()
-{
-    using svbb::make_view;
-    using svbb::string_view;
-    using svbb::tokenize;
+const string_view view = make_view("cat,shark  ,dog, platypus ,cat");
+const char delimeter = ',';
+const string_view whitespace = make_view(" \t");
 
-    const string_view view = make_view("cat,shark  ,dog, platypus ,cat");
-    const char delimeter = ',';
-    const string_view whitespace = make_view(" \t");
-
-    // svbb::tokenize creates a lazy input range that will iterate over the passed in string without any allocations
-    for(string_view token : tokenize(view, delimeter, whitespace)) {
-        std::cout << "Substring: \"" << token << "\"\n";
-    }
+// svbb::tokenize creates a lazy input range
+for(string_view token : tokenize(view, delimeter, whitespace)) {
+    std::cout << "Substring: \"" << token << "\"\n";
 }
 ```
 
 #### Bonus: How to `constexpr` split a `string_view` with svbb:
 ```c++
-#include "svbb/tokenize.hpp"
-#include "svbb/util.hpp" // svbb::make_view
+using svbb::tokenize;
+using namespace svbb::literals;
 
-namespace ctx {
-template<typename Rng, typename T>
-constexpr int count(const Rng& rng, const T& value)
-{
-    int ret = 0;
-    auto first = rng.begin();
-    auto last = rng.end();
-    for(; first != last; ++first) {
-        if(*first == value) {
-            ret++;
-        }
-    }
-    return ret;
-}
-} // namespace ctx
+// svbb::_svc literal creates a string_view with constexpr char_traits
+constexpr auto view = "cat,shark  ,dog, cat, platypus ,cat"_svc;
+constexpr auto delimeter = ',';
+constexpr auto whitespace = " \t"_svc;
+constexpr auto token_range = tokenize(view, delimeter, whitespace);
 
-int main()
-{
-    using svbb::tokenize;
-    using namespace svbb::literals;
-
-    constexpr auto view = "cat,shark  ,dog, cat, platypus ,cat"_svc;
-    constexpr auto delimeter = ',';
-    constexpr auto whitespace = " \t"_svc;
-
-    static_assert(ctx::count(tokenize(view, delimeter, whitespace), "cat"_svc) == 3);
-}
+static_assert(ctx::count(token_range, "cat"_svc) == 3);
 ```
 Note:
 * This compiles on Visual Studio 15.5 with `"/std:c++latest"`.
