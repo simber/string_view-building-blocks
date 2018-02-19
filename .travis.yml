@@ -39,6 +39,7 @@ install:
   - cmake --version
   
 script:
+  - cd ${TRAVIS_BUILD_DIR}
   - mkdir build && cd build && cmake -DBUILD_TESTS=ON -DSVBB_BUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build . --target ALL_BUILD
   - ctest --output-on-failure .
