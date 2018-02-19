@@ -15,6 +15,7 @@ set(INCLUDE_FILES
     "${INCLUDE_DIR}/trim.hpp"
     "${INCLUDE_DIR}/split.hpp"
     "${INCLUDE_DIR}/util.hpp"
+    "${INCLUDE_DIR}/literals.hpp"
     "${INCLUDE_DIR}/char_traits.hpp"
     #"${INCLUDE_DIR}/csv.hpp"
 	#"${INCLUDE_DIR}/string_view_conversion.hpp"
@@ -57,12 +58,14 @@ if(MSVC)
 		#target_compile_features("${PROJECT_NAME}_config" INTERFACE cxx_std_17)
 		target_compile_options("${PROJECT_NAME}_config" INTERFACE "/permissive-" "/std:c++latest")
 		target_compile_definitions("${PROJECT_NAME}_config" INTERFACE _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
-	elseif(MSVC_VERSION GREATER_EQUAL 1700)
+	elseif(MSVC_VERSION GREATER_EQUAL 1900)
     target_compile_definitions("${PROJECT_NAME}_config" INTERFACE SVBB_NO_CXX14_CONSTEXPR)
 		#target_compile_features("${PROJECT_NAME}_config" INTERFACE cxx_std_11)
 		set(SVBB_USE_STX_STRING_VIEW ON)
 	else()
-		message(ERROR "Unsupported MSCV version.")
+		message(WARNING "Unsupported MSCV version.")
+        target_compile_definitions("${PROJECT_NAME}_config" INTERFACE SVBB_NO_CONSTEXPR SVBB_NO_NOEXCEPT)
+		set(SVBB_USE_BOOST_STRING_VIEW ON)
 	endif()
 elseif(CMAKE_COMPILER_IS_GNUCXX)
 	target_compile_options("${PROJECT_NAME}_config" INTERFACE "-Wall" "-Werror" "-pedantic")
@@ -84,7 +87,7 @@ if(SVBB_CONSTEXPR_ALL_THE_THINGS)
 endif()
 
 if(SVBB_USE_BOOST_STRING_VIEW)
-	find_package(Boost 1.58 REQUIRED QUIET)
+	find_package(Boost 1.61 REQUIRED QUIET)
 	target_link_libraries("${PROJECT_NAME}_config" INTERFACE Boost::boost)
 	target_compile_definitions("${PROJECT_NAME}_config" INTERFACE SVBB_USE_BOOST_STRING_VIEW BOOST_ALL_NO_LIB)
 elseif(SVBB_USE_STX_STRING_VIEW)

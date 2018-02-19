@@ -2,6 +2,7 @@
 #include "test_config.hpp"
 #include "svbb/tokenize.hpp"
 #include "svbb/util.hpp"
+#include "svbb/literals.hpp"
 #include <array>
 #include <vector>
 

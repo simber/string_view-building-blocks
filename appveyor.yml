@@ -6,7 +6,6 @@ branches:
   - master
 
 platform:
-  - x86
   - x64
 
 configuration:
@@ -24,6 +23,7 @@ matrix:
 
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+  - set BOOST_DIR=C:/Libraries/boost_1_64_0
 
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -31,9 +31,10 @@ build_script:
   - cd build
   - >
     cmake ..
-    -G "%generator%" 
+    -G "%generator%"
     -DBUILD_TESTS=ON
     -DSVBB_BUILD_EXAMPLES=ON
+    -DBOOST_ROOT=%BOOST_DIR%
   - cmake --build . --target ALL_BUILD --config %configuration% 
 
 test_script:

@@ -2,6 +2,7 @@
 #include "test_config.hpp"
 #include "svbb/split.hpp"
 #include "svbb/util.hpp"
+#include "svbb/literals.hpp"
 
 namespace {
 using namespace SVBB_NAMESPACE;

@@ -1,6 +1,7 @@
 #include "example_config.hpp" // for setting up which string_view implementation is used
 #include "svbb/tokenize.hpp"
 #include "svbb/util.hpp" // svbb::make_view
+#include "svbb/literals.hpp"
 
 namespace ctx {
 template<typename Rng, typename T>
