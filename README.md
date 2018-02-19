@@ -1,4 +1,4 @@
-# string_view-building-blocks [![Build status](https://ci.appveyor.com/api/projects/status/a17s02nvx5xy5tdd?svg=true)](https://ci.appveyor.com/project/simber/string-view-building-blocks)
+# string_view-building-blocks [![Build status](https://ci.appveyor.com/api/projects/status/a17s02nvx5xy5tdd?svg=true)](https://ci.appveyor.com/project/simber/string-view-building-blocks) [![Build Status](https://travis-ci.org/simber/string_view-building-blocks.svg?branch=master)](https://travis-ci.org/simber/string_view-building-blocks)
 C++ string_view extension library.
 ## Summary
 This library provides basic functions for splitting and trimming a `std::string_view` which comes with `C++17`. It can also be used with older compilers (at least `C++11`) and a separate but standard conforming `string_view`  implementation like `boost::string_view`.
