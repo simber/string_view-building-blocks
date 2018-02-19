@@ -16,7 +16,7 @@ environment:
   MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
   matrix:
     - generator: "Visual Studio 15"
-    - generator: "Visual Studio 12"
+    - generator: "Visual Studio 14"
 
 matrix:
   fast_finish: true
@@ -31,7 +31,8 @@ build_script:
   - cd build
   - >
     cmake ..
-    -G "%generator%" 
+    -G "%generator%"
+    -DBUILD_TESTS=ON
     -DSVBB_BUILD_EXAMPLES=ON
     -DBOOST_ROOT=%BOOST_DIR%
   - cmake --build . --target ALL_BUILD --config %configuration% 
