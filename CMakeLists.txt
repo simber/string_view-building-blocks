@@ -17,8 +17,7 @@ set(INCLUDE_FILES
     "${INCLUDE_DIR}/util.hpp"
     "${INCLUDE_DIR}/literals.hpp"
     "${INCLUDE_DIR}/char_traits.hpp"
-    #"${INCLUDE_DIR}/csv.hpp"
-	#"${INCLUDE_DIR}/string_view_conversion.hpp"
+	"${INCLUDE_DIR}/token_iterator.hpp"
 )
 set(TEST_FILES 
     "${TEST_DIR}/svbb.t.cpp"
@@ -26,8 +25,7 @@ set(TEST_FILES
     "${TEST_DIR}/trim.t.cpp"
     "${TEST_DIR}/split.t.cpp"
     "${TEST_DIR}/util.t.cpp"
-    #"${TEST_DIR}/csv.t.cpp"
-	#"${TEST_DIR}/string_view_conversion.t.cpp"
+	"${TEST_DIR}/token_iterator.t.cpp"
 )
 
 set(EXAMPLES

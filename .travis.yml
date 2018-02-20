@@ -11,15 +11,19 @@ addons:
   apt:
     packages:
       - valgrind
-      - g++-6
+      - g++-7
     sources: &sources
       - ubuntu-toolchain-r-test
       
 matrix:
   include:
-    # GCC 6
+    # GCC 7
     - os: linux
-      env: COMPILER=g++-6
+      env: COMPILER=g++-7
+      compiler: gcc
+    # GCC 4.8
+    - os: linux
+      env: COMPILER=g++
       compiler: gcc
       
 install:

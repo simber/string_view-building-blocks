@@ -16,7 +16,9 @@ environment:
   MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
   matrix:
     - generator: "Visual Studio 15"
+      cmake_options: "-DBUILD_TESTS=ON -DSVBB_BUILD_EXAMPLES=ON -DSVBB_CONSTEXPR_ALL_THE_THINGS=ON"
     - generator: "Visual Studio 14"
+      cmake_options: "-DBUILD_TESTS=ON -DSVBB_BUILD_EXAMPLES=ON"
 
 matrix:
   fast_finish: true
@@ -31,10 +33,7 @@ build_script:
   - cd build
   - >
     cmake ..
-    -G "%generator%"
-    -DBUILD_TESTS=ON
-    -DSVBB_BUILD_EXAMPLES=ON
-    -DBOOST_ROOT=%BOOST_DIR%
+    -G "%generator%" %cmake_options%
   - cmake --build . --target ALL_BUILD --config %configuration% 
 
 test_script:
