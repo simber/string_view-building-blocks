@@ -106,7 +106,7 @@ public:
 
     SVBB_CXX14_CONSTEXPR token_iterator operator++(int)
     {
-        token_iterator_base tmp = *this;
+        token_iterator tmp = *this;
         ++base_;
         return tmp;
     }
