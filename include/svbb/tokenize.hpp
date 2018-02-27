@@ -9,12 +9,12 @@ template<typename CharT, typename Traits, typename Splitter>
 class token_range
 {
 public:
-    using iterator = token_iterator_base<CharT, Traits, Splitter>;
+    using iterator = token_iterator<CharT, Traits, Splitter>;
     using const_iterator = iterator;
     using view_type = typename iterator::view_type;
 
     SVBB_CONSTEXPR token_range(view_type view, Splitter splitter)
-        : state_(view, splitter), begin_(state_)
+        : begin_(view, std::move(splitter))
     {
     }
 
@@ -22,9 +22,6 @@ public:
     SVBB_CONSTEXPR auto end() const SVBB_NOEXCEPT -> iterator { return iterator(); }
 
 private:
-    using state_type = typename iterator::state;
-
-    state_type state_;
     iterator begin_;
 };
 
@@ -74,7 +71,7 @@ template<typename CharT, typename Traits, typename Splitter>
 SVBB_CXX14_CONSTEXPR auto tokenize(basic_string_view<CharT, Traits> view, Splitter splitter)
     -> token_range<CharT, Traits, Splitter>
 {
-    return token_range<CharT, Traits, Splitter>(view, splitter);
+    return token_range<CharT, Traits, Splitter>(view, std::move(splitter));
 }
 
 template<typename CharT, typename Traits>
